@@ -318,6 +318,10 @@ body {
         margin-right: 0;
         margin-bottom: 2rem;
     }
+    .week-actions a + a {
+    margin-left: 10px;
+}
+
     
     .university-logo {
         margin-top: 2rem;
