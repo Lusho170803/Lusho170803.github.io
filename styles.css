@@ -1,0 +1,326 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-bg: #f9f9f9;
+    --dark-text: #2c3e50;
+    --gradient-blue: linear-gradient(135deg, #3498db, #2c3e50);
+}
+
+/* Estilos Base */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background: var(--light-bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #f5f5f5;
+    padding: 6rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Reorganizar el contenido del hero */
+.hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Mover la caja de perfil a la izquierda */
+.perfil-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.foto-circular {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.nombre-autor {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Panel para el texto central */
+.hero-text {
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Logo de la universidad a la derecha */
+.university-logo {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Ajustar estilos del título */
+.hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+
+/* Container para el contenido principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Tarjetas de Semanas */
+.week-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin: 2rem auto;
+    transition: transform 0.3s ease;
+    max-width: 800px;
+}
+
+.week-card:hover {
+    transform: translateY(-5px);
+}
+
+.week-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-bottom: 2px solid #eee;
+    position: relative;
+}
+
+.week-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    min-width: 60px;
+    text-align: center;
+}
+
+.week-titles h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.week-subtitle {
+    color: #7f8c8d;
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+}
+
+.update-badge {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.update-badge.new {
+    background: var(--accent-color);
+}
+
+/* Cuerpo de Tarjetas */
+.week-body {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.week-description p {
+    margin-top: 0;
+    color: #34495e;
+}
+
+.week-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.week-features li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.week-features li::before {
+    content: "✓";
+    color: #27ae60;
+}
+
+/* Botones Mejorados */
+.material-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.material-button.canva {
+    background: #00C4CC;
+    color: white;
+}
+
+.material-button.miro {
+    background: #050038;
+    color: white;
+}
+
+.material-button.sheets {
+    background: #34A853;
+    color: white;
+}
+
+.material-button:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+
+.button-icon {
+    font-size: 1.2rem;
+}
+
+/* Footer Moderno */
+.modern-footer {
+    background: var(--primary-color);
+    color: white;
+    margin-top: 5rem;
+    padding: 3rem 0 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.footer-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    background: rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+}
+
+/* Elementos Adicionales */
+.progress-bar {
+    background: #ecf0f1;
+    border-radius: 10px;
+    height: 10px;
+    margin: 1rem 0;
+}
+
+.progress {
+    background: var(--secondary-color);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.week-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    background: #ecf0f1;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .week-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .week-header {
+        flex-direction: column;
+        align-items: start;
+        gap: 1rem;
+    }
+    
+    .hero-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .perfil-box {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .university-logo {
+        margin-top: 2rem;
+        max-width: 150px;
+    }
+}
