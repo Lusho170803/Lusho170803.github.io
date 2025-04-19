@@ -348,8 +348,15 @@ body {
         width: 100%;
         margin: 0;
     }
-    
-    .week-actions a + a {
-        margin-left: 0;
-    }
+}
+
+/* Mejoras para los botones de la semana 4 */
+.material-button.canva:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 196, 204, 0.3);
+}
+
+.fa-project-diagram,
+.fa-networked-database {
+    font-size: 1.4rem;
 }
