@@ -1,40 +1,43 @@
-const ADMIN_CREDENTIALS = { user: "DocenteBD", pass: "UPLA2024" };
+const ADMIN_USER = "DocenteBD";
+const ADMIN_PASS = "UPLA2024";
 let weeksData = JSON.parse(localStorage.getItem('weeksData')) || [];
 
 function login() {
     const user = document.getElementById('admin-user').value;
     const pass = document.getElementById('admin-pass').value;
-    if (user === ADMIN_CREDENTIALS.user && pass === ADMIN_CREDENTIALS.pass) {
+    
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
         document.getElementById('login-box').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     } else {
-        alert("Credenciales incorrectas");
+        alert("⚠️ Credenciales incorrectas");
     }
 }
 
 function logout() {
-    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('weeksData');
     window.location.reload();
 }
 
 function addLink() {
     const container = document.getElementById('links-container');
-    const div = document.createElement('div');
-    div.className = 'link-input';
-    div.innerHTML = `
+    const newLink = document.createElement('div');
+    newLink.className = 'link-input';
+    newLink.innerHTML = `
         <input type="text" placeholder="Nombre" class="link-name">
         <input type="url" placeholder="URL" class="link-url">
         <button type="button" class="btn-remove" onclick="removeLink(this)">&times;</button>
     `;
-    container.appendChild(div);
+    container.appendChild(newLink);
 }
 
 function removeLink(btn) {
     btn.parentElement.remove();
 }
 
-document.getElementById('week-form').addEventListener('submit', function(e) {
+document.getElementById('week-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    
     const newWeek = {
         week: document.getElementById('week-number').value,
         title: document.getElementById('week-title').value,
@@ -42,19 +45,21 @@ document.getElementById('week-form').addEventListener('submit', function(e) {
         status: document.getElementById('week-status').value,
         description: document.getElementById('week-description').value,
         tags: document.getElementById('week-tags').value.split(',').map(t => t.trim()),
-        links: Array.from(document.getElementsByClassName('link-input')).map(input => ({
+        links: Array.from(document.querySelectorAll('.link-input')).map(input => ({
             name: input.querySelector('.link-name').value,
             url: input.querySelector('.link-url').value
         }))
     };
+    
     weeksData.push(newWeek);
     localStorage.setItem('weeksData', JSON.stringify(weeksData));
-    renderNewWeek(newWeek);
-    this.reset();
+    renderWeek(newWeek);
+    e.target.reset();
 });
 
-function renderNewWeek(week) {
+function renderWeek(week) {
     const container = document.querySelector('main.container');
+    
     if (!document.getElementById(`semana${week.week}`)) {
         container.innerHTML += `
             <section id="semana${week.week}" class="week-card">
@@ -69,21 +74,13 @@ function renderNewWeek(week) {
                 <div class="week-body">
                     <div class="week-description">
                         <p>${week.description}</p>
-                        ${week.tags?.length ? `
-                        <div class="week-tags">
-                            ${week.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>` : ''}
+                        ${week.tags?.length ? `<div class="week-tags">${week.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
                     </div>
                     <div class="week-actions">
-                        ${week.links?.length ? `
-                        <div class="buttons-group">
-                            ${week.links.map(link => `
-                                <a href="${link.url}" class="material-button ${link.name.toLowerCase().includes('canva') ? 'canva' : 'miro'}" target="_blank">
-                                    <span class="button-icon">${link.name.includes('Canva') ? '🎨' : '📊'}</span>
-                                    ${link.name}
-                                </a>
-                            `).join('')}
-                        </div>` : ''}
+                        ${week.links?.length ? `<div class="buttons-group">${week.links.map(l => `
+                            <a href="${l.url}" class="material-button ${l.name.toLowerCase().includes('canva') ? 'canva' : 'miro'}" target="_blank">
+                                ${l.name.includes('Canva') ? '🎨' : '📊'} ${l.name}
+                            </a>`).join('')}</div>` : ''}
                     </div>
                 </div>
             </section>
@@ -92,9 +89,5 @@ function renderNewWeek(week) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    weeksData.forEach(week => {
-        if (!document.getElementById(`semana${week.week}`)) {
-            renderNewWeek(week);
-        }
-    });
+    weeksData.forEach(week => renderWeek(week));
 });
