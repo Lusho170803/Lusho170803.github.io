@@ -7,7 +7,6 @@
     --gradient-blue: linear-gradient(135deg, #3498db, #2c3e50);
 }
 
-/* Estilos Base */
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
@@ -17,21 +16,19 @@ body {
     padding: 0;
 }
 
-/* Sistema Admin */
 #admin-system {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
     max-width: 350px;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
 }
 
 .admin-card {
-    background: white;
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-    margin-bottom: 1rem;
 }
 
 .admin-input {
@@ -42,15 +39,8 @@ body {
     border-radius: 6px;
 }
 
-.admin-form .form-group {
+.form-group {
     margin: 1rem 0;
-}
-
-.admin-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--primary-color);
 }
 
 .link-input {
@@ -72,11 +62,6 @@ body {
 
 .btn-remove {
     background: #e74c3c;
-    padding: 0;
-}
-
-.btn-add:hover, .btn-remove:hover {
-    transform: scale(1.1);
 }
 
 .logout-btn {
@@ -84,6 +69,212 @@ body {
     margin-top: 1rem;
 }
 
-/* ... [Todo el CSS que proporcionaste antes, desde :root hasta .fa-networked-database] ... */
+.hero {
+    background-color: #f5f5f5;
+    padding: 6rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
 
-/* Asegúrate de incluir TODO tu CSS anterior aquí */
+.hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.perfil-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.foto-circular {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.nombre-autor {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.week-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin: 2rem auto;
+    transition: transform 0.3s ease;
+    max-width: 800px;
+}
+
+.week-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-bottom: 2px solid #eee;
+    position: relative;
+}
+
+.week-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    min-width: 60px;
+    text-align: center;
+}
+
+.update-badge {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.update-badge.new {
+    background: var(--accent-color);
+}
+
+.week-body {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.week-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.week-features li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.week-features li::before {
+    content: "✓";
+    color: #27ae60;
+}
+
+.material-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 12px 25px;
+    min-width: 140px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.material-button.canva {
+    background: #00C4CC;
+    color: white;
+}
+
+.material-button.miro {
+    background: #050038;
+    color: white;
+}
+
+.material-button.sheets {
+    background: #34A853;
+    color: white;
+}
+
+.modern-footer {
+    background: var(--primary-color);
+    color: white;
+    margin-top: 5rem;
+    padding: 3rem 0 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    background: rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    #admin-system {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 90%;
+        margin: 20px auto;
+        max-width: none;
+    }
+    
+    .admin-card {
+        padding: 1rem;
+    }
+    
+    .link-input {
+        flex-direction: column;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .week-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .material-button {
+        width: 100%;
+    }
+}
