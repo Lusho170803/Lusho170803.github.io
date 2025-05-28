@@ -137,6 +137,10 @@ body {
     background: var(--accent-color);
 }
 
+.update-badge.important {
+    background: var(--warning-color);
+}
+
 /* Cuerpo de Tarjetas */
 .week-body {
     padding: 1.5rem;
@@ -208,6 +212,22 @@ body {
 
 .material-button.sheets {
     background: #34A853;
+    color: white;
+}
+
+.material-button.exam {
+    background: #f39c12;
+    color: white;
+}
+
+.material-button.pdf {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Nuevo estilo para botón de documentos */
+.material-button.docs {
+    background: #4285F4; /* Azul de Google Docs */
     color: white;
 }
 
