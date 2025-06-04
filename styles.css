@@ -4,6 +4,7 @@
     --accent-color: #e74c3c;
     --light-bg: #f9f9f9;
     --dark-text: #2c3e50;
+    --warning-color: #f39c12;
 }
 
 /* Estilos Generales */
@@ -20,6 +21,10 @@ body {
     background-color: #f5f5f5;
     padding: 6rem 1rem;
     position: relative;
+    background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.8)), url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
 }
 
 .hero-content {
@@ -51,20 +56,28 @@ body {
     margin-top: 0.5rem;
     font-weight: bold;
     font-size: 1rem;
-    color: #333;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 300px;
 }
 
 .hero-title {
     font-size: 2.8rem;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    color: white;
     font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
     font-weight: 400;
-    color: var(--secondary-color);
+    color: rgba(255,255,255,0.9);
+    max-width: 600px;
 }
 
 .university-logo {
@@ -87,10 +100,12 @@ body {
     margin: 2rem auto;
     max-width: 800px;
     transition: transform 0.3s ease;
+    overflow: hidden;
 }
 
 .week-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
 }
 
 .week-header {
@@ -113,6 +128,7 @@ body {
 .week-titles h2 {
     margin: 0;
     font-size: 1.5rem;
+    color: var(--primary-color);
 }
 
 .week-subtitle {
@@ -131,14 +147,22 @@ body {
     border-radius: 20px;
     font-size: 0.8rem;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .update-badge.new {
     background: var(--accent-color);
+    animation: pulse 2s infinite;
 }
 
 .update-badge.important {
     background: var(--warning-color);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
 }
 
 /* Cuerpo de Tarjetas */
@@ -152,6 +176,7 @@ body {
 .week-description p {
     margin-top: 0;
     color: #34495e;
+    line-height: 1.7;
 }
 
 .week-features {
@@ -170,6 +195,7 @@ body {
 .week-features li::before {
     content: "✓";
     color: #27ae60;
+    font-weight: bold;
 }
 
 /* Botones */
@@ -183,6 +209,7 @@ body {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .material-button {
@@ -225,9 +252,8 @@ body {
     color: white;
 }
 
-/* Nuevo estilo para botón de documentos */
 .material-button.docs {
-    background: #4285F4; /* Azul de Google Docs */
+    background: #4285F4;
     color: white;
 }
 
@@ -261,6 +287,7 @@ body {
 .footer-section h3 {
     color: var(--secondary-color);
     margin-bottom: 1rem;
+    font-size: 1.3rem;
 }
 
 .footer-section ul {
@@ -268,10 +295,17 @@ body {
     padding: 0;
 }
 
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
 .footer-section a {
     color: #bdc3c7;
     text-decoration: none;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .footer-section a:hover {
@@ -284,6 +318,7 @@ body {
     margin-top: 3rem;
     background: rgba(0,0,0,0.1);
     font-size: 0.9rem;
+    color: #ecf0f1;
 }
 
 /* Elementos Adicionales */
@@ -312,13 +347,33 @@ body {
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
     font-size: 0.8rem;
+    color: #7f8c8d;
 }
 
 /* Responsive para móviles */
 @media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .perfil-box {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
     .week-card {
         margin: 1rem;
         border-radius: 12px;
+    }
+    
+    .week-header {
+        gap: 1rem;
+        padding: 1.2rem;
     }
     
     .week-number {
@@ -335,9 +390,20 @@ body {
         padding: 1rem;
     }
     
+    .buttons-group {
+        justify-content: center;
+        width: 100%;
+    }
+    
     .material-button {
         width: 100%;
         padding: 10px 15px;
+    }
+    
+    .update-badge {
+        position: static;
+        margin-top: 1rem;
+        display: inline-block;
     }
 }
 
