@@ -295,6 +295,108 @@
         </div>
     </div>
 </section>
+        <!-- Semana 12 - Módulos de Aprendizaje -->
+        <section id="semana12" class="week-card">
+            <div class="week-header">
+                <div class="week-number">12</div>
+                <div class="week-titles">
+                    <h2>Módulos de Aprendizaje</h2>
+                    <p class="week-subtitle">Instalación y administración de bases de datos</p>
+                </div>
+                <span class="update-badge new">Nuevo</span>
+            </div>
+            <div class="week-body">
+                <div class="week-description">
+                    <p>Material avanzado sobre administración de bases de datos con SQL Server:</p>
+                    <ul class="week-features">
+                        <li>✓ Instalación y configuración de SQL Server</li>
+                        <li>✓ Creación y administración de bases de datos</li>
+                        <li>✓ Mantenimiento y optimización</li>
+                    </ul>
+                </div>
+                
+                <!-- Botones para los módulos -->
+                <div class="week-actions">
+                    <div class="buttons-group">
+                        <a href="https://docs.google.com/document/d/1AsCbp9qLnkfkZXAsl-3m_DIGJbunOK93v48EmR0jJ3k/edit?usp=sharing" 
+                           class="material-button docs" 
+                           target="_blank">
+                            <i class="fas fa-database button-icon"></i>
+                            Módulo 2: Instalación SQL
+                        </a>
+                        <a href="https://docs.google.com/document/d/1M6A_D-B4q5TSU1LJ8MssKDwxRdZScOzSARNz6z29ZNs/edit?usp=sharing" 
+                           class="material-button docs" 
+                           target="_blank">
+                            <i class="fas fa-server button-icon"></i>
+                            Módulo 3: Administración BD
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Otras secciones existentes... -->
+        
+        <section id="semana10" class="week-card">
+            <!-- Contenido existente... -->
+        </section>
+
+        <section id="semana11" class="week-card">
+            <!-- Contenido existente... -->
+        </section>
+    </main>
+
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Proyecto BD II</h3>
+                <p>Curso 2024 - Universidad Peruana Los Andes</p>
+            </div>
+            <div class="footer-section">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="#semana1">Semana 1</a></li>
+                    <li><a href="#semana2">Semana 2</a></li>
+                    <li><a href="#semana3">Semana 3</a></li>
+                    <li><a href="#semana4">Semana 4</a></li>
+                    <li><a href="#semana5">Semana 5</a></li>
+                    <li><a href="#semana6">Semana 6</a></li>
+                    <li><a href="#examen1">Examen Parcial</a></li>
+                    <li><a href="#semana10">Semana 10</a></li>
+                    <li><a href="#semana11">Semana 11</a></li>
+                    <li><a href="#semana12">Semana 12</a></li> <!-- Nuevo enlace -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>r03419f@upla.edu.pe<br>+51 987 816 057</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Todos los derechos reservados | Diseñado con ♥ por LUIS VELIZ MIRANDA</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de desplazamiento suave para los enlaces del menú
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
 
 
     </main>
