@@ -44,6 +44,7 @@ header,
 .navigation nav ul {
     display: flex;
     gap: 2.5rem;
+    align-items: center;
 }
 
 .navigation nav ul li {
@@ -63,6 +64,24 @@ header,
     background: #0ff;
     color: #002f3f;
     outline: none;
+}
+
+.logout-button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s;
+}
+
+.logout-button:hover {
+    background: #ff5252;
 }
 
 /* HERO SECTION */
@@ -188,18 +207,27 @@ header,
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 1.3rem;
+    flex-wrap: wrap;
 }
 
 .week-number {
     background: #00d2ff;
     color: #003140;
     font-weight: 900;
-    font-size: 2.4rem;
-    padding: 1rem 1.3rem;
+    font-size: 1.8rem;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    min-width: 60px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 0 15px #00d2ffcc;
+    flex-shrink: 0;
+}
+
+.week-titles {
+    flex: 1;
+    min-width: 200px;
 }
 
 .week-titles h2 {
@@ -224,6 +252,8 @@ header,
     font-weight: bold;
     padding: 0.3rem 0.7rem;
     border-radius: 10px;
+    align-self: flex-start;
+    margin-top: 5px;
 }
 
 .update-badge.new {
@@ -387,4 +417,72 @@ header,
         flex-direction: column;
         align-items: center;
     }
+    
+    .week-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    .week-titles {
+        min-width: 150px;
+    }
+}
+
+/* Estilo para prácticas */
+.week-card[id*="practica"] .week-number {
+    background: #ffcc00;
+    color: #003140;
+    box-shadow: 0 0 15px #ffcc00cc;
+}
+
+/* Estilos para la página de login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.login-logo {
+    width: 150px;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
+}
+
+.login-title {
+    color: #0ff;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+}
+
+.login-subtitle {
+    color: #9ad6e3;
+    margin-bottom: 35px;
+    font-size: 1.1rem;
+}
+
+.note {
+    margin-top: 30px;
+    color: #a0d2e0;
+    font-size: 0.9rem;
+}
+
+.university {
+    margin-top: 25px;
+    color: #88c9da;
+    font-weight: 500;
 }
