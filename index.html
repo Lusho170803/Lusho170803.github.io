@@ -166,23 +166,20 @@
             document.getElementById('loading').style.display = 'block';
             document.getElementById('custom-google-btn').style.display = 'none';
             
-            // URL de redirección exacta
-            const redirectUri = 'https://lusho170803.github.io/auth/google/callback.html';
+            // CORRECCIÓN 1: Usar el alias 'email' en lugar del scope completo
+            const scope = 'email';
             
-            // Scopes (permisos) SOLO los necesarios
-            const scope = 'https://www.googleapis.com/auth/userinfo.email';
-            
-            // Construir URL de autenticación
-            const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
-            authUrl.searchParams.append('client_id', CLIENT_ID);
-            authUrl.searchParams.append('redirect_uri', redirectUri);
-            authUrl.searchParams.append('response_type', 'code');
-            authUrl.searchParams.append('scope', scope);
-            authUrl.searchParams.append('access_type', 'offline');
-            authUrl.searchParams.append('prompt', 'select_account');
+            // CORRECCIÓN 2: Codificar correctamente los parámetros
+            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+                `client_id=${encodeURIComponent(CLIENT_ID)}` +
+                `&redirect_uri=${encodeURIComponent('https://lusho170803.github.io/auth/google/callback.html')}` +
+                `&response_type=code` +
+                `&scope=${encodeURIComponent(scope)}` +
+                `&access_type=offline` +
+                `&prompt=select_account`;
             
             // Redirigir a Google en la MISMA pestaña
-            window.location.href = authUrl.toString();
+            window.location.href = authUrl;
         }
         
         // Asignar evento al botón
@@ -193,7 +190,9 @@
         const error = urlParams.get('error');
         
         if (error) {
-            alert(`Error de autenticación: ${error}`);
+            // CORRECCIÓN 3: Mensaje más informativo
+            alert(`Error de autenticación (${error}): 
+Por favor verifica que estés usando una cuenta autorizada o contacta al administrador.`);
         }
     </script>
 </body>
