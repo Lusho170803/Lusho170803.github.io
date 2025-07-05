@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso - Repositorio Académico</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Google Identity Services -->
+    <!-- Google Identity Services (mantenemos para compatibilidad) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <meta name="google-signin-client_id" content="25506034810-7flkcr1s7rlrsl34o5t8u8mbus8m3k67.apps.googleusercontent.com">
+    
     <style>
         /* Estilos específicos para la página de login */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 20px;
+            box-sizing: border-box;
         }
         
         .login-box {
@@ -62,6 +70,72 @@
             color: #88c9da;
             font-weight: 500;
         }
+        
+        /* Estilos para el botón personalizado */
+        .custom-google-btn {
+            background: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            width: 300px;
+            max-width: 100%;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+        }
+        
+        .custom-google-btn:hover {
+            background: #3367D6;
+            transform: translateY(-2px);
+        }
+        
+        .custom-google-btn:active {
+            transform: translateY(0);
+        }
+        
+        .google-icon {
+            background: white;
+            border-radius: 2px;
+            padding: 3px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .google-icon img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px auto;
+            color: #0ff;
+            font-size: 14px;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(0, 210, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #0ff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -71,23 +145,17 @@
             <h1 class="login-title">Repositorio Académico</h1>
             <p class="login-subtitle">Acceso con cuenta institucional</p>
             
-            <!-- Botón de Google Sign-In -->
-            <div id="g_id_onload"
-                 data-client_id="839274636385-h0l3cjtlt42bqujiskbgq0flthnda0pq.apps.googleusercontent.com"
-                 data-context="signin"
-                 data-ux_mode="popup"
-                 data-callback="handleCredentialResponse"
-                 data-auto_prompt="false">
-            </div>
+            <!-- Botón personalizado de Google Sign-In -->
+            <button id="custom-google-btn" class="custom-google-btn">
+                <span class="google-icon">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+                </span>
+                Iniciar sesión con Google
+            </button>
             
-            <div class="g_id_signin"
-                 data-type="standard"
-                 data-shape="rectangular"
-                 data-theme="filled_blue"
-                 data-text="signin_with"
-                 data-size="large"
-                 data-logo_alignment="left"
-                 data-width="300">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Redirigiendo a Google...
             </div>
             
             <p class="note">Al iniciar sesión aceptas nuestros términos y condiciones de uso</p>
@@ -96,25 +164,44 @@
     </div>
 
     <script>
-        function handleCredentialResponse(response) {
-            // Guarda el token de Google
-            const id_token = response.credential;
-            sessionStorage.setItem('google_token', id_token);
+        // ID de cliente de Google (REEMPLAZAR CON EL TUYO)
+        const CLIENT_ID = '25506034810-7flkcr1s7rlrsl34o5t8u8mbus8m3k67.apps.googleusercontent.com';
+        
+        // Función para iniciar el login con Google
+        function iniciarLoginGoogle() {
+            // Mostrar carga
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('custom-google-btn').style.display = 'none';
             
-            // Redirigir al portafolio
-            window.location.href = "portafolio.html";
+            // URL de redirección exacta (debe coincidir con Google Cloud)
+            const redirectUri = 'https://lusho170803.github.io/auth/google/callback';
+            
+            // Solo solicitar email (permiso mínimo)
+            const scope = 'email';
+            
+            // Construir URL de autenticación
+            const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
+            authUrl.searchParams.append('client_id', CLIENT_ID);
+            authUrl.searchParams.append('redirect_uri', redirectUri);
+            authUrl.searchParams.append('response_type', 'code');
+            authUrl.searchParams.append('scope', scope);
+            authUrl.searchParams.append('access_type', 'offline');
+            authUrl.searchParams.append('prompt', 'select_account');
+            
+            // Redirigir a Google
+            window.location.href = authUrl.toString();
         }
         
-        // Manejo de errores
-        window.addEventListener('load', function() {
-            const googleSignIn = document.querySelector('.g_id_signin');
-            if (googleSignIn) {
-                googleSignIn.addEventListener('error', function(event) {
-                    console.error("Error en Google Sign-In:", event.detail);
-                    alert("Error al iniciar sesión. Por favor intenta nuevamente.");
-                });
-            }
-        });
+        // Asignar evento al botón
+        document.getElementById('custom-google-btn').addEventListener('click', iniciarLoginGoogle);
+        
+        // Manejar parámetros de error si existen
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        
+        if (error) {
+            alert(`Error de autenticación: ${error}`);
+        }
     </script>
 </body>
 </html>
