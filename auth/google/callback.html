@@ -2,114 +2,27 @@
 <html>
 <head>
     <title>Autenticación en proceso</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            text-align: center;
-        }
-        
-        .container {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 210, 255, 0.3);
-        }
-        
-        .spinner {
-            border: 5px solid rgba(0, 210, 255, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid #0ff;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        h1 {
-            color: #0ff;
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
-        }
-        
-        .error {
-            color: #ff6b6b;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="spinner"></div>
-        <h1>Procesando autenticación</h1>
-        <p>Por favor espere mientras completamos su acceso...</p>
-        
-        <div id="error-message" class="error" style="display: none;"></div>
-    </div>
-
     <script>
-        // Capturar parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const authCode = urlParams.get('code');
-        const error = urlParams.get('error');
-        const errorDescription = urlParams.get('error_description');
         
-        // Elementos del DOM
-        const errorMessage = document.getElementById('error-message');
-        
-        // Manejar errores
-        if (error) {
-            errorMessage.style.display = 'block';
-            errorMessage.innerHTML = `
-                <h3>Error de autenticación</h3>
-                <p><strong>Código:</strong> ${error}</p>
-                <p><strong>Descripción:</strong> ${errorDescription || 'Error desconocido'}</p>
-                <p>Por favor intente nuevamente o contacte al administrador.</p>
-            `;
-            
-            // Ocultar spinner
-            document.querySelector('.spinner').style.display = 'none';
-        } 
-        // Manejar código de autorización
-        else if (authCode) {
-            // Guardar el código en localStorage (persistente)
+        if(authCode) {
+            // Guardar en localStorage
             localStorage.setItem('google_auth_code', authCode);
             
-            // Redirigir al portafolio en la MISMA pestaña
-            setTimeout(() => {
-                window.location.href = "https://lusho170803.github.io/portafolio.html";
-            }, 2000);
-        }
-        // Si no hay ni código ni error
-        else {
-            errorMessage.style.display = 'block';
-            errorMessage.innerHTML = `
-                <h3>Error en el proceso</h3>
-                <p>No se recibió información de autenticación válida.</p>
-                <p>Por favor intente iniciar sesión nuevamente desde la página principal.</p>
-            `;
-            
-            // Ocultar spinner
-            document.querySelector('.spinner').style.display = 'none';
+            // Redirigir al portafolio
+            window.location.href = "https://lusho170803.github.io/portafolio.html";
+        } else {
+            const error = urlParams.get('error');
+            if(error) {
+                alert(`Error: ${error}`);
+            }
+            // Redirigir al inicio si hay error
+            window.location.href = "https://lusho170803.github.io/";
         }
     </script>
+</head>
+<body>
+    <p>Procesando autenticación, por favor espere...</p>
 </body>
 </html>
