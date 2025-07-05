@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Procesando autenticación</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Capturar parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const authCode = urlParams.get('code');
+      const error = urlParams.get('error');
+      
+      if (error) {
+        console.error('Error de Google:', error);
+        alert(`Error de autenticación: ${error}`);
+        window.location.href = '/';
+        return;
+      }
+      
+      if (authCode) {
+        console.log('Código de autorización recibido:', authCode);
+        alert('¡Autenticación exitosa! Código: ' + authCode);
+        
+        // Guardar en localStorage (ejemplo básico)
+        localStorage.setItem('google_auth_code', authCode);
+        
+        // Redirigir al inicio
+        window.location.href = '/';
+      } else {
+        alert('No se recibió código de autorización');
+        window.location.href = '/';
+      }
+    });
+  </script>
+</head>
+<body>
+  <p>Procesando autenticación, por favor espere...</p>
+</body>
+</html>
