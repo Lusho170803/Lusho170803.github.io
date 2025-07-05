@@ -90,12 +90,12 @@
         } 
         // Manejar código de autorización
         else if (authCode) {
-            // Guardar el código en sessionStorage
-            sessionStorage.setItem('google_auth_code', authCode);
+            // Guardar el código en localStorage (persistente)
+            localStorage.setItem('google_auth_code', authCode);
             
-            // Redirigir al portafolio después de un breve retraso
+            // Redirigir al portafolio en la MISMA pestaña
             setTimeout(() => {
-window.location.href = "/portafolio.html";
+                window.location.href = "https://lusho170803.github.io/portafolio.html";
             }, 2000);
         }
         // Si no hay ni código ni error
