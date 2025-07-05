@@ -6,21 +6,22 @@
     <title>Base de Datos II - Repositorio Profesional</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        // Verificar si el usuario está autenticado
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!sessionStorage.getItem('google_token')) {
-                window.location.href = 'index.html';
-            }
-        });
-        
-        function logout() {
-            sessionStorage.removeItem('google_token');
-            window.location.href = 'index.html';
-        }
-    </script>
 </head>
 <body>
+    <!-- Overlay de autenticación -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-box">
+            <div class="auth-spinner"></div>
+            <p class="auth-message">Verificando autenticación...</p>
+            <div id="auth-error" class="auth-error">
+                <h3>Acceso requerido</h3>
+                <p>Debes iniciar sesión para acceder a este contenido</p>
+                <p>Redirigiendo a la página de inicio...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero section -->
     <div class="hero">
         <div class="hero-content">
             <div class="perfil-box">
@@ -49,6 +50,7 @@
         </div>
     </div>
 
+    <!-- Navigation -->
     <div class="navigation">
         <div class="container">
             <nav>
@@ -68,6 +70,7 @@
         </div>
     </div>
 
+    <!-- Main content -->
     <main class="container">
         <section class="section-header">
             <h2>Progreso Académico</h2>
@@ -438,7 +441,7 @@
                 </div>
             </section>
             
-            <!-- Semana 14 - Nueva sección -->
+            <!-- Semana 14 -->
             <section id="semana14" class="week-card">
                 <div class="week-header">
                     <div class="week-number">14</div>
@@ -482,7 +485,7 @@
                 </div>
             </section>
             
-            <!-- Semana 15 - Nueva sección -->
+            <!-- Semana 15 -->
             <section id="semana15" class="week-card">
                 <div class="week-header">
                     <div class="week-number">15</div>
@@ -568,6 +571,7 @@
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="modern-footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -611,7 +615,38 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
+        // Verificar autenticación al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const authOverlay = document.getElementById('auth-overlay');
+            const authError = document.getElementById('auth-error');
+            
+            // Obtener código de autenticación guardado
+            const authCode = localStorage.getItem('google_auth_code');
+            
+            if (!authCode) {
+                authOverlay.style.display = 'flex';
+                authError.style.display = 'block';
+                
+                // Redirigir después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = 'https://lusho170803.github.io/';
+                }, 3000);
+            } else {
+                authOverlay.style.display = 'none';
+            }
+        });
+        
+        // Función para cerrar sesión
+        function logout() {
+            // Eliminar datos de autenticación
+            localStorage.removeItem('google_auth_code');
+            
+            // Redirigir a la página de inicio
+            window.location.href = 'https://lusho170803.github.io/';
+        }
+        
         // Efecto de desplazamiento suave para los enlaces del menú
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
