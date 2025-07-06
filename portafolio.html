@@ -200,6 +200,10 @@
             background: #8B5CF6;
         }
         
+        .update-badge.practice {
+            background: #F59E0B;
+        }
+        
         .week-body {
             padding: 25px;
         }
@@ -709,6 +713,7 @@
                     <option value="new">Nuevo</option>
                     <option value="important">Importante</option>
                     <option value="final">Final</option>
+                    <option value="practice">Práctica</option>
                 </select>
             </div>
             
@@ -1011,7 +1016,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Cargar secciones iniciales si no hay datos
             if (!localStorage.getItem('sections')) {
-                // Secciones iniciales (tus secciones actuales)
+                // Secciones iniciales (todas tus secciones originales)
                 const initialSections = {
                     "section-1": {
                         number: "01",
@@ -1113,7 +1118,93 @@
                         badge: "Nuevo",
                         badgeClass: "new"
                     },
-                    // ... (agrega más secciones según sea necesario) ...
+                    "section-11": {
+                        number: "11",
+                        title: "Semana 11 - Consultas",
+                        subtitle: "Consultas con la base de datos Empleados",
+                        description: "En esta sección se presenta el trabajo correspondiente a la semana 11.",
+                        links: [
+                            { texto: "Trabajo Semana 11", url: "https://docs.google.com/document/d/1_cPcXeobNLuqT9bBzEt8Dz7ZuTJ4fXEnHrSpWSxUWbs/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Consultas, Base de Datos, SQL",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-12": {
+                        number: "12",
+                        title: "Módulos de Aprendizaje",
+                        subtitle: "Instalación y administración de bases de datos",
+                        description: "Material avanzado sobre administración de bases de datos con SQL Server:\n- Instalación y configuración de SQL Server\n- Creación y administración de bases de datos\n- Mantenimiento y optimización",
+                        links: [
+                            { texto: "Módulo 2: Instalación SQL", url: "https://docs.google.com/document/d/1AsCbp9qLnkfkZXAsl-3m_DIGJbunOK93v48EmR0jJ3k/edit?usp=sharing", tipo: "docs" },
+                            { texto: "Módulo 3: Administración BD", url: "https://docs.google.com/document/d/1M6A_D-B4q5TSU1LJ8MssKDwxRdZScOzSARNz6z29ZNs/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "SQL Server, Administración, Instalación",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-13": {
+                        number: "13",
+                        title: "Módulos de Seguridad y Consultas",
+                        subtitle: "Seguridad en SQL Server y Consultas Avanzadas",
+                        description: "Material avanzado sobre seguridad en bases de datos y técnicas de consultas avanzadas:\n- Configuración de seguridad y permisos\n- Cifrado de datos y auditoría\n- Funciones de agregación y uniones complejas\n- Funciones de ventana y análisis avanzado",
+                        links: [
+                            { texto: "Módulo 4: Seguridad SQL Server", url: "https://docs.google.com/document/d/1Wk6S4iPMlFqq5kFkcRTtF8G3NRZfZjtLXby-fD5WECg/edit?usp=sharing", tipo: "docs" },
+                            { texto: "Módulo 5: Consultas Avanzadas", url: "https://docs.google.com/document/d/1qbGPLRJ0qmvxgNWkt-srwGT-Z-ipCwIGT6ebS2BFEKA/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Seguridad, Consultas Avanzadas, SQL Server",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-14": {
+                        number: "14",
+                        title: "Módulos de Desarrollo Avanzado",
+                        subtitle: "Optimización y rendimiento en bases de datos",
+                        description: "Material avanzado sobre técnicas de optimización y mejora del rendimiento:\n- Índices y optimización de consultas\n- Planes de ejecución y análisis\n- Particionamiento de datos\n- Técnicas de caching",
+                        links: [
+                            { texto: "Módulo 6: Optimización BD", url: "https://docs.google.com/document/d/1Big0-NeHf1zSzHSbsYUJKgBeRChkMy64mkec61-8Zts/edit?usp=sharing", tipo: "docs" },
+                            { texto: "Módulo 7: Rendimiento Avanzado", url: "https://docs.google.com/document/d/16tD76zKV8cL6sO7MYSlA8GqXpHdjPNl76z1M-eaIwsQ/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Optimización, Rendimiento, SQL Server",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-15": {
+                        number: "15",
+                        title: "Módulo de Integración",
+                        subtitle: "Despliegue y monitoreo de sistemas",
+                        description: "Material completo sobre despliegue de sistemas y monitoreo de rendimiento:\n- Estrategias de despliegue\n- Monitoreo en tiempo real\n- Alertas y notificaciones\n- Mantenimiento preventivo",
+                        links: [
+                            { texto: "Módulo 8: Despliegue Final", url: "https://docs.google.com/document/d/1IspE3w70fbvGCHqeNdnXxNmDXjh0FWjwZqhTzQB0mQ8/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Despliegue, Monitoreo, Producción",
+                        badge: "Final",
+                        badgeClass: "final"
+                    },
+                    "section-p13": {
+                        number: "P13",
+                        title: "Práctica - Semana 13",
+                        subtitle: "Trabajo práctico de la semana 13",
+                        description: "Enlace al desarrollo completo de la práctica correspondiente a la semana 13",
+                        links: [
+                            { texto: "Ver Práctica Semana 13", url: "https://docs.google.com/document/d/1PtLvaljOrlc1npacPCGuonil6zkagMNSR1iUa1QKUok/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Práctica, Semana 13, Desarrollo",
+                        badge: "Práctica",
+                        badgeClass: "practice"
+                    },
+                    "section-p14": {
+                        number: "P14",
+                        title: "Práctica - Semana 14",
+                        subtitle: "Trabajo práctico de la semana 14",
+                        description: "Enlace al desarrollo completo de la práctica correspondiente a la semana 14",
+                        links: [
+                            { texto: "Ver Práctica Semana 14", url: "https://docs.google.com/document/d/1NhTSSImw1LB0EeXgx9IVhpzl3eM6phv_W0FUizsOQhU/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Práctica, Semana 14, Desarrollo",
+                        badge: "Práctica",
+                        badgeClass: "practice"
+                    }
                 };
                 
                 localStorage.setItem('sections', JSON.stringify(initialSections));
