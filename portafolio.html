@@ -4,49 +4,473 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base de Datos II - Repositorio Profesional</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ESTILOS GENERALES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #f0f9ff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER Y HERO */
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+            color: #0ff;
+            position: relative;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: #9ad6e3;
+            position: relative;
+        }
+        
+        /* NAVEGACIÓN */
+        .navigation {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: #9ad6e3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            color: #0ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+        
+        /* TARJETAS DE SEMANAS */
+        .section-header {
+            text-align: center;
+            margin: 50px 0 30px;
+            position: relative;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #0ff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: #88c9da;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .week-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .week-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 210, 255, 0.4);
+        }
+        
+        .week-header {
+            display: flex;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .week-number {
+            width: 50px;
+            height: 50px;
+            background: #0ff;
+            color: #0f2027;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .week-titles {
+            flex: 1;
+        }
+        
+        .week-titles h2 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: #f0f9ff;
+        }
+        
+        .week-subtitle {
+            color: #88c9da;
+            font-size: 1rem;
+        }
+        
+        .update-badge {
+            background: #10B981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            align-self: center;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+        
+        .update-badge.new {
+            background: #3B82F6;
+        }
+        
+        .update-badge.important {
+            background: #EF4444;
+        }
+        
+        .update-badge.final {
+            background: #8B5CF6;
+        }
+        
+        .week-body {
+            padding: 25px;
+        }
+        
+        .week-description {
+            margin-bottom: 25px;
+        }
+        
+        .week-description p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #c5e8f3;
+        }
+        
+        .week-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .week-features li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 30px;
+            color: #9ad6e3;
+        }
+        
+        .week-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #0ff;
+            font-weight: bold;
+        }
+        
+        .week-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tag {
+            background: rgba(0, 210, 255, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #9ad6e3;
+        }
+        
+        .week-actions {
+            margin-top: 20px;
+        }
+        
+        .buttons-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 180px;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .material-button:hover {
+            background: rgba(0, 210, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .material-button.canva {
+            background: rgba(255, 86, 48, 0.15);
+            border-color: rgba(255, 86, 48, 0.3);
+        }
+        
+        .material-button.miro {
+            background: rgba(0, 202, 183, 0.15);
+            border-color: rgba(0, 202, 183, 0.3);
+        }
+        
+        .material-button.sheets {
+            background: rgba(66, 133, 91, 0.15);
+            border-color: rgba(66, 133, 91, 0.3);
+        }
+        
+        .material-button.exam {
+            background: rgba(234, 67, 53, 0.15);
+            border-color: rgba(234, 67, 53, 0.3);
+        }
+        
+        .material-button.pdf {
+            background: rgba(219, 68, 55, 0.15);
+            border-color: rgba(219, 68, 55, 0.3);
+        }
+        
+        .material-button.docs {
+            background: rgba(66, 133, 244, 0.15);
+            border-color: rgba(66, 133, 244, 0.3);
+        }
+        
+        /* PROGRESS BAR */
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #0ff, #3B82F6);
+            border-radius: 10px;
+        }
+        
+        /* FOOTER */
+        .modern-footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 210, 255, 0.2);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #0ff;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #0ff;
+        }
+        
+        .footer-section p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #9ad6e3;
+        }
+        
+        .footer-section p i {
+            margin-right: 10px;
+            width: 20px;
+            color: #0ff;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 20px;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+        
+        .footer-section ul li a {
+            color: #9ad6e3;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #0ff;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #9ad6e3;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #0ff;
+            color: #0f2027;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #88c9da;
+            font-size: 0.9rem;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-section ul {
+                columns: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Overlay de autenticación -->
-    <div id="auth-overlay" class="auth-overlay">
-        <div class="auth-box">
-            <div class="auth-spinner"></div>
-            <p class="auth-message">Verificando autenticación...</p>
-            <div id="auth-error" class="auth-error">
-                <h3>Acceso requerido</h3>
-                <p>Debes iniciar sesión para acceder a este contenido</p>
-                <p>Redirigiendo a la página de inicio...</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Hero section -->
     <div class="hero">
-        <div class="hero-content">
-            <div class="perfil-box">
-                <img src="img/Perfil.jpeg" alt="Foto de perfil" class="foto-circular">
-                <p class="nombre-autor">LUIS VELIZ MIRANDA</p>
-            </div>
-            <div class="hero-text">
-                <h1 class="hero-title">Mi Repositorio Académico</h1>
-                <p class="hero-subtitle">Base de Datos II - Evolución Semanal</p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-book"></i>
-                        <span>18+ Módulos</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-code"></i>
-                        <span>25+ Actividades</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>Progreso: 95%</span>
-                    </div>
-                </div>
-            </div>
-            <img src="img/logo upla.png" alt="Logo UPLA" class="university-logo">
+        <div class="container">
+            <h1 class="hero-title">Repositorio Académico</h1>
+            <p class="hero-subtitle">Base de Datos II - Evolución Semanal</p>
         </div>
     </div>
 
@@ -60,11 +484,6 @@
                     <li><a href="#examen1">Exámenes</a></li>
                     <li><a href="#">Recursos</a></li>
                     <li><a href="#">Contacto</a></li>
-                    <li>
-                        <button onclick="logout()" class="logout-button">
-                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-                        </button>
-                    </li>
                 </ul>
             </nav>
         </div>
@@ -92,9 +511,9 @@
                     <div class="week-description">
                         <p>Resumen breve del libro con los conceptos clave de SGBD</p>
                         <ul class="week-features">
-                            <li>✓ Modelos de datos</li>
-                            <li>✓ Arquitectura ANSI-SPARC</li>
-                            <li>✓ Lenguajes de consulta</li>
+                            <li>Modelos de datos</li>
+                            <li>Arquitectura ANSI-SPARC</li>
+                            <li>Lenguajes de consulta</li>
                         </ul>
                     </div>
                     <div class="week-actions">
@@ -214,9 +633,9 @@
                     <div class="week-description">
                         <p>Implementación de sistema de registro y creación de base de datos con:</p>
                         <ul class="week-features">
-                            <li>✓ Registro</li>
-                            <li>✓ Inicio de Sesión</li>
-                            <li>✓ Generación de Base de Datos</li>
+                            <li>Registro</li>
+                            <li>Inicio de Sesión</li>
+                            <li>Generación de Base de Datos</li>
                         </ul>
                         <div class="week-tags">
                             <span class="tag">Guía Práctica</span>
@@ -253,7 +672,7 @@
                         </div>
                     </div>
                     <div class="week-actions">
-                        <a href="https://www.canva.com/design/DAGmuobX94Q/d9MOApT45K-0FTPdQQCOyg/view?utm_content=DAGmuobX94Q&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h2bb7d4c4f5" class="material-button canva" target="_blank">
+                        <a href="https://www.canva.com/design/DAGmuobX94Q/d9MOApT45K-0FTPdQQCOyg/view" class="material-button canva" target="_blank">
                             <span class="button-icon">🧩</span>
                             Ver Canva Semana 6
                         </a>
@@ -277,17 +696,11 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1YJVrLAQ-lF3gZb0qFfaxu6MEreE69UDuEwX2qNW2JD0/edit?usp=sharing" 
-                               class="material-button exam" 
-                               target="_blank"
-                               rel="noopener noreferrer">
+                            <a href="https://docs.google.com/document/d/1YJVrLAQ-lF3gZb0qFfaxu6MEreE69UDuEwX2qNW2JD0/edit?usp=sharing" class="material-button exam" target="_blank">
                                 <span class="button-icon">📝</span>
                                 Pruebas
                             </a>
-                            <a href="https://drive.google.com/uc?export=download&id=1SIvDIHCaEaUaPnMJlOy8UNgXGVyjPTl-" 
-                               class="material-button pdf" 
-                               download="NombreDelArchivo.pdf"
-                               rel="noopener noreferrer">
+                            <a href="https://drive.google.com/uc?export=download&id=1SIvDIHCaEaUaPnMJlOy8UNgXGVyjPTl-" class="material-button pdf" download="NombreDelArchivo.pdf" target="_blank">
                                 <span class="button-icon">📄</span>
                                 Descargar PDF
                             </a>
@@ -316,11 +729,11 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/11F-vBC0ybYxilvI_ljJYjU-yKmHCNFCse-9xtzhUN8w/edit?usp=sharing" class="material-button canva" target="_blank">
+                            <a href="https://docs.google.com/document/d/11F-vBC0ybYxilvI_ljJYjU-yKmHCNFCse-9xtzhUN8w/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <span class="button-icon">📌</span>
                                 Trabajo Semana 10 - 1
                             </a>
-                            <a href="https://docs.google.com/document/d/1jmGm4t-UOf3j5QYhtW6GjJh7jJb9OVoLx3i2j3El2V8/edit?usp=sharing" class="material-button canva" target="_blank">
+                            <a href="https://docs.google.com/document/d/1jmGm4t-UOf3j5QYhtW6GjJh7jJb9OVoLx3i2j3El2V8/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <span class="button-icon">📎</span>
                                 Trabajo Semana 10 - 2
                             </a>
@@ -350,7 +763,7 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1_cPcXeobNLuqT9bBzEt8Dz7ZuTJ4fXEnHrSpWSxUWbs/edit?usp=sharing" class="material-button canva" target="_blank">
+                            <a href="https://docs.google.com/document/d/1_cPcXeobNLuqT9bBzEt8Dz7ZuTJ4fXEnHrSpWSxUWbs/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <span class="button-icon">📎</span>
                                 Trabajo Semana 11
                             </a>
@@ -373,22 +786,18 @@
                     <div class="week-description">
                         <p>Material avanzado sobre administración de bases de datos con SQL Server:</p>
                         <ul class="week-features">
-                            <li>✓ Instalación y configuración de SQL Server</li>
-                            <li>✓ Creación y administración de bases de datos</li>
-                            <li>✓ Mantenimiento y optimización</li>
+                            <li>Instalación y configuración de SQL Server</li>
+                            <li>Creación y administración de bases de datos</li>
+                            <li>Mantenimiento y optimización</li>
                         </ul>
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1AsCbp9qLnkfkZXAsl-3m_DIGJbunOK93v48EmR0jJ3k/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1AsCbp9qLnkfkZXAsl-3m_DIGJbunOK93v48EmR0jJ3k/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-database button-icon"></i>
                                 Módulo 2: Instalación SQL
                             </a>
-                            <a href="https://docs.google.com/document/d/1M6A_D-B4q5TSU1LJ8MssKDwxRdZScOzSARNz6z29ZNs/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1M6A_D-B4q5TSU1LJ8MssKDwxRdZScOzSARNz6z29ZNs/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-server button-icon"></i>
                                 Módulo 3: Administración BD
                             </a>
@@ -411,10 +820,10 @@
                     <div class="week-description">
                         <p>Material avanzado sobre seguridad en bases de datos y técnicas de consultas avanzadas:</p>
                         <ul class="week-features">
-                            <li>✓ Configuración de seguridad y permisos</li>
-                            <li>✓ Cifrado de datos y auditoría</li>
-                            <li>✓ Funciones de agregación y uniones complejas</li>
-                            <li>✓ Funciones de ventana y análisis avanzado</li>
+                            <li>Configuración de seguridad y permisos</li>
+                            <li>Cifrado de datos y auditoría</li>
+                            <li>Funciones de agregación y uniones complejas</li>
+                            <li>Funciones de ventana y análisis avanzado</li>
                         </ul>
                         <div class="week-tags">
                             <span class="tag">Seguridad</span>
@@ -424,15 +833,11 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1Wk6S4iPMlFqq5kFkcRTtF8G3NRZfZjtLXby-fD5WECg/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1Wk6S4iPMlFqq5kFkcRTtF8G3NRZfZjtLXby-fD5WECg/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-shield-alt button-icon"></i>
                                 Módulo 4: Seguridad SQL Server
                             </a>
-                            <a href="https://docs.google.com/document/d/1qbGPLRJ0qmvxgNWkt-srwGT-Z-ipCwIGT6ebS2BFEKA/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1qbGPLRJ0qmvxgNWkt-srwGT-Z-ipCwIGT6ebS2BFEKA/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-search-plus button-icon"></i>
                                 Módulo 5: Consultas Avanzadas
                             </a>
@@ -455,10 +860,10 @@
                     <div class="week-description">
                         <p>Material avanzado sobre técnicas de optimización y mejora del rendimiento:</p>
                         <ul class="week-features">
-                            <li>✓ Índices y optimización de consultas</li>
-                            <li>✓ Planes de ejecución y análisis</li>
-                            <li>✓ Particionamiento de datos</li>
-                            <li>✓ Técnicas de caching</li>
+                            <li>Índices y optimización de consultas</li>
+                            <li>Planes de ejecución y análisis</li>
+                            <li>Particionamiento de datos</li>
+                            <li>Técnicas de caching</li>
                         </ul>
                         <div class="week-tags">
                             <span class="tag">Optimización</span>
@@ -468,15 +873,11 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1Big0-NeHf1zSzHSbsYUJKgBeRChkMy64mkec61-8Zts/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1Big0-NeHf1zSzHSbsYUJKgBeRChkMy64mkec61-8Zts/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-bolt button-icon"></i>
                                 Módulo 6: Optimización BD
                             </a>
-                            <a href="https://docs.google.com/document/d/16tD76zKV8cL6sO7MYSlA8GqXpHdjPNl76z1M-eaIwsQ/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/16tD76zKV8cL6sO7MYSlA8GqXpHdjPNl76z1M-eaIwsQ/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-chart-line button-icon"></i>
                                 Módulo 7: Rendimiento Avanzado
                             </a>
@@ -493,16 +894,16 @@
                         <h2>Módulo de Integración</h2>
                         <p class="week-subtitle">Despliegue y monitoreo de sistemas</p>
                     </div>
-                    <span class="update-badge important">Final</span>
+                    <span class="update-badge final">Final</span>
                 </div>
                 <div class="week-body">
                     <div class="week-description">
                         <p>Material completo sobre despliegue de sistemas y monitoreo de rendimiento:</p>
                         <ul class="week-features">
-                            <li>✓ Estrategias de despliegue</li>
-                            <li>✓ Monitoreo en tiempo real</li>
-                            <li>✓ Alertas y notificaciones</li>
-                            <li>✓ Mantenimiento preventivo</li>
+                            <li>Estrategias de despliegue</li>
+                            <li>Monitoreo en tiempo real</li>
+                            <li>Alertas y notificaciones</li>
+                            <li>Mantenimiento preventivo</li>
                         </ul>
                         <div class="week-tags">
                             <span class="tag">Despliegue</span>
@@ -512,9 +913,7 @@
                     </div>
                     <div class="week-actions">
                         <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1IspE3w70fbvGCHqeNdnXxNmDXjh0FWjwZqhTzQB0mQ8/edit?usp=sharing" 
-                               class="material-button docs" 
-                               target="_blank">
+                            <a href="https://docs.google.com/document/d/1IspE3w70fbvGCHqeNdnXxNmDXjh0FWjwZqhTzQB0mQ8/edit?usp=sharing" class="material-button docs" target="_blank">
                                 <i class="fas fa-rocket button-icon"></i>
                                 Módulo 8: Despliegue Final
                             </a>
@@ -573,81 +972,53 @@
 
     <!-- Footer -->
     <footer class="modern-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Proyecto BD II</h3>
-                <p>Curso 2024 - Universidad Peruana Los Andes</p>
-                <div class="social-icons">
-                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Proyecto BD II</h3>
+                    <p>Curso 2024 - Universidad Peruana Los Andes</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#semana1">Semana 1</a></li>
+                        <li><a href="#semana2">Semana 2</a></li>
+                        <li><a href="#semana3">Semana 3</a></li>
+                        <li><a href="#semana4">Semana 4</a></li>
+                        <li><a href="#semana5">Semana 5</a></li>
+                        <li><a href="#semana6">Semana 6</a></li>
+                        <li><a href="#examen1">Examen Parcial</a></li>
+                        <li><a href="#semana10">Semana 10</a></li>
+                        <li><a href="#semana11">Semana 11</a></li>
+                        <li><a href="#semana12">Semana 12</a></li>
+                        <li><a href="#semana13">Semana 13</a></li>
+                        <li><a href="#semana14">Semana 14</a></li>
+                        <li><a href="#semana15">Semana 15</a></li>
+                        <li><a href="#semana13-practica">Práctica 13</a></li>
+                        <li><a href="#semana14-practica">Práctica 14</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-envelope"></i> r03419f@upla.edu.pe</p>
+                    <p><i class="fas fa-phone"></i> +51 987 816 057</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Lima, Perú</p>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul>
-                    <li><a href="#semana1">Semana 1</a></li>
-                    <li><a href="#semana2">Semana 2</a></li>
-                    <li><a href="#semana3">Semana 3</a></li>
-                    <li><a href="#semana4">Semana 4</a></li>
-                    <li><a href="#semana5">Semana 5</a></li>
-                    <li><a href="#semana6">Semana 6</a></li>
-                    <li><a href="#examen1">Examen Parcial</a></li>
-                    <li><a href="#semana10">Semana 10</a></li>
-                    <li><a href="#semana11">Semana 11</a></li>
-                    <li><a href="#semana12">Semana 12</a></li>
-                    <li><a href="#semana13">Semana 13</a></li>
-                    <li><a href="#semana14">Semana 14</a></li>
-                    <li><a href="#semana15">Semana 15</a></li>
-                    <li><a href="#semana13-practica">Práctica 13</a></li>
-                    <li><a href="#semana14-practica">Práctica 14</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>© 2024 Todos los derechos reservados | Diseñado con ♥ por LUIS VELIZ MIRANDA</p>
             </div>
-            <div class="footer-section">
-                <h3>Contacto</h3>
-                <p><i class="fas fa-envelope"></i> r03419f@upla.edu.pe</p>
-                <p><i class="fas fa-phone"></i> +51 987 816 057</p>
-                <p><i class="fas fa-map-marker-alt"></i> Lima, Perú</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2024 Todos los derechos reservados | Diseñado con ♥ por LUIS VELIZ MIRANDA</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script>
-        // Verificar autenticación al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            const authOverlay = document.getElementById('auth-overlay');
-            const authError = document.getElementById('auth-error');
-            
-            // Obtener código de autenticación guardado
-            const authCode = localStorage.getItem('google_auth_code');
-            
-            if (!authCode) {
-                authOverlay.style.display = 'flex';
-                authError.style.display = 'block';
-                
-                // Redirigir después de 3 segundos
-                setTimeout(() => {
-                    window.location.href = 'https://lusho170803.github.io/';
-                }, 3000);
-            } else {
-                authOverlay.style.display = 'none';
-            }
-        });
-        
-        // Función para cerrar sesión
-        function logout() {
-            // Eliminar datos de autenticación
-            localStorage.removeItem('google_auth_code');
-            
-            // Redirigir a la página de inicio
-            window.location.href = 'https://lusho170803.github.io/';
-        }
-        
-        // Efecto de desplazamiento suave para los enlaces del menú
+        // Función para desplazamiento suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -657,23 +1028,27 @@
                 
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 120,
+                        top: targetElement.offsetTop - 100,
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Efecto de scroll para mostrar las tarjetas
+        // Efecto de aparición para las tarjetas
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.week-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(card);
         });
     </script>
