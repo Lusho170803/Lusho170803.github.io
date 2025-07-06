@@ -432,6 +432,155 @@
             font-size: 0.9rem;
         }
         
+        /* ESTILOS PARA EL PANEL ADMIN */
+        .admin-panel {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            display: none;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            padding-bottom: 15px;
+        }
+        
+        .admin-header h2 {
+            color: #0ff;
+            font-size: 1.8rem;
+        }
+        
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #9ad6e3;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+        
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .admin-button {
+            background: rgba(0, 210, 255, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .admin-button:hover {
+            background: rgba(0, 210, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .admin-button.delete {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+        
+        .admin-button.delete:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+        
+        .admin-button.cancel {
+            background: rgba(156, 163, 175, 0.2);
+            border-color: rgba(156, 163, 175, 0.4);
+        }
+        
+        .admin-button.cancel:hover {
+            background: rgba(156, 163, 175, 0.3);
+        }
+        
+        #admin-access {
+            text-align: center;
+            margin: 20px 0 30px;
+        }
+        
+        #toggle-admin {
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .edit-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 210, 255, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: none;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+        
+        .week-card:hover .edit-button {
+            display: block;
+        }
+        
+        .form-note {
+            font-size: 0.85rem;
+            color: #88c9da;
+            margin-top: 5px;
+        }
+        
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero-title {
@@ -462,6 +611,15 @@
             .footer-section ul {
                 columns: 1;
             }
+            
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                grid-column: span 1;
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -489,6 +647,85 @@
         </div>
     </div>
 
+    <!-- Botón para mostrar panel admin -->
+    <div class="container" id="admin-access">
+        <button id="toggle-admin" class="admin-button">
+            <i class="fas fa-cog"></i> Panel de Administración
+        </button>
+    </div>
+
+    <!-- Panel de Administración CRUD -->
+    <div class="container admin-panel" id="admin-panel">
+        <div class="admin-header">
+            <h2>Administrar Secciones</h2>
+            <button id="close-admin" class="admin-button cancel">
+                <i class="fas fa-times"></i> Cerrar
+            </button>
+        </div>
+        
+        <form id="section-form" class="admin-form">
+            <input type="hidden" id="section-id">
+            
+            <div class="form-group">
+                <label for="section-number">Número de Sección</label>
+                <input type="text" id="section-number" placeholder="Ej: 01, 02, EX, P13" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="section-title">Título</label>
+                <input type="text" id="section-title" placeholder="Título de la sección" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="section-subtitle">Subtítulo</label>
+                <input type="text" id="section-subtitle" placeholder="Subtítulo o descripción breve">
+            </div>
+            
+            <div class="form-group">
+                <label for="section-description">Descripción</label>
+                <textarea id="section-description" placeholder="Descripción detallada..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="section-links">Enlaces (1 por línea)</label>
+                <textarea id="section-links" placeholder="Texto del enlace|URL|tipo (canva, miro, etc.)"></textarea>
+                <div class="form-note">Formato: Texto|URL|tipo (ej: Ver en Canva|https://ejemplo.com|canva)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="section-tags">Etiquetas (separadas por comas)</label>
+                <input type="text" id="section-tags" placeholder="Ej: Canva, UML, Cardinalidades">
+            </div>
+            
+            <div class="form-group">
+                <label for="section-badge">Badge (opcional)</label>
+                <input type="text" id="section-badge" placeholder="Ej: Nuevo, Actualizado, Importante">
+            </div>
+            
+            <div class="form-group">
+                <label for="section-badge-class">Estilo del Badge</label>
+                <select id="section-badge-class">
+                    <option value="">Normal</option>
+                    <option value="new">Nuevo</option>
+                    <option value="important">Importante</option>
+                    <option value="final">Final</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" id="delete-button" class="admin-button delete">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+                <button type="button" id="cancel-edit" class="admin-button cancel">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="submit" class="admin-button">
+                    <i class="fas fa-save"></i> Guardar Sección
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Main content -->
     <main class="container">
         <section class="section-header">
@@ -496,477 +733,8 @@
             <p>Explora los materiales y actividades semana por semana</p>
         </section>
 
-        <div class="cards-container">
-            <!-- Semana 1 -->
-            <section id="semana1" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">01</div>
-                    <div class="week-titles">
-                        <h2>Resumen - Sistemas de Gestión</h2>
-                        <p class="week-subtitle">Fundamentos teóricos</p>
-                    </div>
-                    <span class="update-badge">Actualizado</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Resumen breve del libro con los conceptos clave de SGBD</p>
-                        <ul class="week-features">
-                            <li>Modelos de datos</li>
-                            <li>Arquitectura ANSI-SPARC</li>
-                            <li>Lenguajes de consulta</li>
-                        </ul>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://www.canva.com/design/DAGjhW3b3Z4/1F8Msflp4mXHkiPCdT5GOg/edit" class="material-button canva" target="_blank">
-                            <span class="button-icon">🎨</span>
-                            Ver en Canva
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 2 -->
-            <section id="semana2" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">02</div>
-                    <div class="week-titles">
-                        <h2>Diagramas Entidad-Relación</h2>
-                        <p class="week-subtitle">Modelado conceptual</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Modelado de los enunciados con notación Chen y Crow's Foot</p>
-                        <div class="week-tags">
-                            <span class="tag">Miro</span>
-                            <span class="tag">UML</span>
-                            <span class="tag">Cardinalidades</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://miro.com/app/board/uXjVIKKtp7I=/?share_link_id=351356854071" class="material-button miro" target="_blank">
-                                <i class="fas fa-project-diagram button-icon"></i>
-                                Enunciado 1
-                            </a>
-                            <a href="https://miro.com/app/board/uXjVIEViWTk=/?share_link_id=707711672275" class="material-button miro" target="_blank">
-                                <i class="fas fa-networked-database button-icon"></i>
-                                Enunciado 2
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 3 -->
-            <section id="semana3" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">03</div>
-                    <div class="week-titles">
-                        <h2>Tablas Relacionales</h2>
-                        <p class="week-subtitle">Implementación práctica</p>
-                    </div>
-                    <span class="update-badge">En progreso</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Normalización de tablas y relaciones entre entidades</p>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 65%"></div>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://docs.google.com/spreadsheets/d/1qCrRLu40WDrcBY35mrMY3RNO7dEVE-ErY9tIFCTk134/edit?usp=sharing" class="material-button sheets" target="_blank">
-                            <span class="button-icon">📑</span>
-                            Ver Tablas
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 4 -->
-            <section id="semana4" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">04</div>
-                    <div class="week-titles">
-                        <h2>Modelo Conceptual - Diagramas E/R</h2>
-                        <p class="week-subtitle">Desarrollo avanzado</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Diagramas detallados con notación Chen y Crow's Foot para casos complejos</p>
-                        <div class="week-tags">
-                            <span class="tag">Canva</span>
-                            <span class="tag">Normalización</span>
-                            <span class="tag">Relaciones</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://www.canva.com/design/DAGlGT8bDKY/X9zQTtO7hgex5OSJE5TPYQ/view" class="material-button canva" target="_blank">
-                                <span class="button-icon">🎨</span>
-                                Enunciado 1
-                            </a>
-                            <a href="https://www.canva.com/design/DAGlGubxnV4/svhKEBY3HG4keco_plw4eg/view" class="material-button canva" target="_blank">
-                                <span class="button-icon">📊</span>
-                                Enunciado 2
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 5 -->
-            <section id="semana5" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">05</div>
-                    <div class="week-titles">
-                        <h2>Registro y Base de Datos</h2>
-                        <p class="week-subtitle">Guía práctica en Microsoft Access</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Implementación de sistema de registro y creación de base de datos con:</p>
-                        <ul class="week-features">
-                            <li>Registro</li>
-                            <li>Inicio de Sesión</li>
-                            <li>Generación de Base de Datos</li>
-                        </ul>
-                        <div class="week-tags">
-                            <span class="tag">Guía Práctica</span>
-                            <span class="tag">Microsoft Azure</span>
-                            <span class="tag">Registro de Usuarios</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://www.canva.com/design/DAGl3x54IsA/RaSMVcBqlbN9USvtAnZOSQ/view" class="material-button canva" target="_blank">
-                            <span class="button-icon">📘</span>
-                            Ver Manual Completo
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 6 -->
-            <section id="semana6" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">06</div>
-                    <div class="week-titles">
-                        <h2>Página Web en Azure</h2>
-                        <p class="week-subtitle">Manual de como subir la página web de GITHUB hacia Azure</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Práctica y guía para la carga de mi página web a Microsoft Azure.</p>
-                        <div class="week-tags">
-                            <span class="tag">Azure</span>
-                            <span class="tag">GitHub</span>
-                            <span class="tag">Canva</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://www.canva.com/design/DAGmuobX94Q/d9MOApT45K-0FTPdQQCOyg/view" class="material-button canva" target="_blank">
-                            <span class="button-icon">🧩</span>
-                            Ver Canva Semana 6
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Examen Parcial -->
-            <section id="examen1" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">EX</div>
-                    <div class="week-titles">
-                        <h2>Primer Examen Parcial</h2>
-                        <p class="week-subtitle">Evaluación inicial</p>
-                    </div>
-                    <span class="update-badge important">Importante</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Material de preparación y recursos para el primer examen parcial</p>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1YJVrLAQ-lF3gZb0qFfaxu6MEreE69UDuEwX2qNW2JD0/edit?usp=sharing" class="material-button exam" target="_blank">
-                                <span class="button-icon">📝</span>
-                                Pruebas
-                            </a>
-                            <a href="https://drive.google.com/uc?export=download&id=1SIvDIHCaEaUaPnMJlOy8UNgXGVyjPTl-" class="material-button pdf" download="NombreDelArchivo.pdf" target="_blank">
-                                <span class="button-icon">📄</span>
-                                Descargar PDF
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 10 -->
-            <section id="semana10" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">10</div>
-                    <div class="week-titles">
-                        <h2>Semana 10 - Actividades Combinadas</h2>
-                        <p class="week-subtitle">Trabajos de la semana 10</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>En esta sección se encuentran agrupadas las actividades correspondientes a la semana 10.</p>
-                        <div class="week-tags">
-                            <span class="tag">Consultas</span>
-                            <span class="tag">Base de Datos</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/11F-vBC0ybYxilvI_ljJYjU-yKmHCNFCse-9xtzhUN8w/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <span class="button-icon">📌</span>
-                                Trabajo Semana 10 - 1
-                            </a>
-                            <a href="https://docs.google.com/document/d/1jmGm4t-UOf3j5QYhtW6GjJh7jJb9OVoLx3i2j3El2V8/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <span class="button-icon">📎</span>
-                                Trabajo Semana 10 - 2
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 11 -->
-            <section id="semana11" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">11</div>
-                    <div class="week-titles">
-                        <h2>Semana 11 - Consultas</h2>
-                        <p class="week-subtitle">Consultas con la base de datos Empleados</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>En esta sección se presenta el trabajo correspondiente a la semana 11.</p>
-                        <div class="week-tags">
-                            <span class="tag">Consultas</span>
-                            <span class="tag">Base de Datos</span>
-                            <span class="tag">SQL</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1_cPcXeobNLuqT9bBzEt8Dz7ZuTJ4fXEnHrSpWSxUWbs/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <span class="button-icon">📎</span>
-                                Trabajo Semana 11
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 12 -->
-            <section id="semana12" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">12</div>
-                    <div class="week-titles">
-                        <h2>Módulos de Aprendizaje</h2>
-                        <p class="week-subtitle">Instalación y administración de bases de datos</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Material avanzado sobre administración de bases de datos con SQL Server:</p>
-                        <ul class="week-features">
-                            <li>Instalación y configuración de SQL Server</li>
-                            <li>Creación y administración de bases de datos</li>
-                            <li>Mantenimiento y optimización</li>
-                        </ul>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1AsCbp9qLnkfkZXAsl-3m_DIGJbunOK93v48EmR0jJ3k/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-database button-icon"></i>
-                                Módulo 2: Instalación SQL
-                            </a>
-                            <a href="https://docs.google.com/document/d/1M6A_D-B4q5TSU1LJ8MssKDwxRdZScOzSARNz6z29ZNs/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-server button-icon"></i>
-                                Módulo 3: Administración BD
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 13 -->
-            <section id="semana13" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">13</div>
-                    <div class="week-titles">
-                        <h2>Módulos de Seguridad y Consultas</h2>
-                        <p class="week-subtitle">Seguridad en SQL Server y Consultas Avanzadas</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Material avanzado sobre seguridad en bases de datos y técnicas de consultas avanzadas:</p>
-                        <ul class="week-features">
-                            <li>Configuración de seguridad y permisos</li>
-                            <li>Cifrado de datos y auditoría</li>
-                            <li>Funciones de agregación y uniones complejas</li>
-                            <li>Funciones de ventana y análisis avanzado</li>
-                        </ul>
-                        <div class="week-tags">
-                            <span class="tag">Seguridad</span>
-                            <span class="tag">Consultas Avanzadas</span>
-                            <span class="tag">SQL Server</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1Wk6S4iPMlFqq5kFkcRTtF8G3NRZfZjtLXby-fD5WECg/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-shield-alt button-icon"></i>
-                                Módulo 4: Seguridad SQL Server
-                            </a>
-                            <a href="https://docs.google.com/document/d/1qbGPLRJ0qmvxgNWkt-srwGT-Z-ipCwIGT6ebS2BFEKA/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-search-plus button-icon"></i>
-                                Módulo 5: Consultas Avanzadas
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Semana 14 -->
-            <section id="semana14" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">14</div>
-                    <div class="week-titles">
-                        <h2>Módulos de Desarrollo Avanzado</h2>
-                        <p class="week-subtitle">Optimización y rendimiento en bases de datos</p>
-                    </div>
-                    <span class="update-badge new">Nuevo</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Material avanzado sobre técnicas de optimización y mejora del rendimiento:</p>
-                        <ul class="week-features">
-                            <li>Índices y optimización de consultas</li>
-                            <li>Planes de ejecución y análisis</li>
-                            <li>Particionamiento de datos</li>
-                            <li>Técnicas de caching</li>
-                        </ul>
-                        <div class="week-tags">
-                            <span class="tag">Optimización</span>
-                            <span class="tag">Rendimiento</span>
-                            <span class="tag">SQL Server</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1Big0-NeHf1zSzHSbsYUJKgBeRChkMy64mkec61-8Zts/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-bolt button-icon"></i>
-                                Módulo 6: Optimización BD
-                            </a>
-                            <a href="https://docs.google.com/document/d/16tD76zKV8cL6sO7MYSlA8GqXpHdjPNl76z1M-eaIwsQ/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-chart-line button-icon"></i>
-                                Módulo 7: Rendimiento Avanzado
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Semana 15 -->
-            <section id="semana15" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">15</div>
-                    <div class="week-titles">
-                        <h2>Módulo de Integración</h2>
-                        <p class="week-subtitle">Despliegue y monitoreo de sistemas</p>
-                    </div>
-                    <span class="update-badge final">Final</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Material completo sobre despliegue de sistemas y monitoreo de rendimiento:</p>
-                        <ul class="week-features">
-                            <li>Estrategias de despliegue</li>
-                            <li>Monitoreo en tiempo real</li>
-                            <li>Alertas y notificaciones</li>
-                            <li>Mantenimiento preventivo</li>
-                        </ul>
-                        <div class="week-tags">
-                            <span class="tag">Despliegue</span>
-                            <span class="tag">Monitoreo</span>
-                            <span class="tag">Producción</span>
-                        </div>
-                    </div>
-                    <div class="week-actions">
-                        <div class="buttons-group">
-                            <a href="https://docs.google.com/document/d/1IspE3w70fbvGCHqeNdnXxNmDXjh0FWjwZqhTzQB0mQ8/edit?usp=sharing" class="material-button docs" target="_blank">
-                                <i class="fas fa-rocket button-icon"></i>
-                                Módulo 8: Despliegue Final
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 13 - Práctica -->
-            <section id="semana13-practica" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">P13</div>
-                    <div class="week-titles">
-                        <h2>Práctica - Semana 13</h2>
-                        <p class="week-subtitle">Trabajo práctico de la semana 13</p>
-                    </div>
-                    <span class="update-badge">Práctica</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Enlace al desarrollo completo de la práctica correspondiente a la semana 13:</p>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://docs.google.com/document/d/1PtLvaljOrlc1npacPCGuonil6zkagMNSR1iUa1QKUok/edit?usp=sharing" class="material-button docs" target="_blank">
-                            <i class="fas fa-file-alt button-icon"></i>
-                            Ver Práctica Semana 13
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Semana 14 - Práctica -->
-            <section id="semana14-practica" class="week-card">
-                <div class="week-header">
-                    <div class="week-number">P14</div>
-                    <div class="week-titles">
-                        <h2>Práctica - Semana 14</h2>
-                        <p class="week-subtitle">Trabajo práctico de la semana 14</p>
-                    </div>
-                    <span class="update-badge">Práctica</span>
-                </div>
-                <div class="week-body">
-                    <div class="week-description">
-                        <p>Enlace al desarrollo completo de la práctica correspondiente a la semana 14:</p>
-                    </div>
-                    <div class="week-actions">
-                        <a href="https://docs.google.com/document/d/1NhTSSImw1LB0EeXgx9IVhpzl3eM6phv_W0FUizsOQhU/edit?usp=sharing" class="material-button docs" target="_blank">
-                            <i class="fas fa-file-alt button-icon"></i>
-                            Ver Práctica Semana 14
-                        </a>
-                    </div>
-                </div>
-            </section>
+        <div class="cards-container" id="cards-container">
+            <!-- Las secciones se cargarán dinámicamente aquí -->
         </div>
     </main>
 
@@ -985,22 +753,8 @@
                 </div>
                 <div class="footer-section">
                     <h3>Recursos</h3>
-                    <ul>
-                        <li><a href="#semana1">Semana 1</a></li>
-                        <li><a href="#semana2">Semana 2</a></li>
-                        <li><a href="#semana3">Semana 3</a></li>
-                        <li><a href="#semana4">Semana 4</a></li>
-                        <li><a href="#semana5">Semana 5</a></li>
-                        <li><a href="#semana6">Semana 6</a></li>
-                        <li><a href="#examen1">Examen Parcial</a></li>
-                        <li><a href="#semana10">Semana 10</a></li>
-                        <li><a href="#semana11">Semana 11</a></li>
-                        <li><a href="#semana12">Semana 12</a></li>
-                        <li><a href="#semana13">Semana 13</a></li>
-                        <li><a href="#semana14">Semana 14</a></li>
-                        <li><a href="#semana15">Semana 15</a></li>
-                        <li><a href="#semana13-practica">Práctica 13</a></li>
-                        <li><a href="#semana14-practica">Práctica 14</a></li>
+                    <ul id="resources-list">
+                        <!-- Los recursos se cargarán dinámicamente aquí -->
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -1018,38 +772,372 @@
 
     <!-- Scripts -->
     <script>
-        // Función para desplazamiento suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+        // ===========================================
+        // SISTEMA CRUD PARA GESTIONAR SECCIONES
+        // ===========================================
+        
+        // Elementos del DOM
+        const adminPanel = document.getElementById('admin-panel');
+        const toggleAdminBtn = document.getElementById('toggle-admin');
+        const closeAdminBtn = document.getElementById('close-admin');
+        const sectionForm = document.getElementById('section-form');
+        const cardsContainer = document.getElementById('cards-container');
+        const resourcesList = document.getElementById('resources-list');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const deleteButton = document.getElementById('delete-button');
+        
+        // Estado para edición
+        let editingSectionId = null;
+        
+        // Mostrar/ocultar panel admin
+        toggleAdminBtn.addEventListener('click', () => {
+            adminPanel.style.display = 'block';
+            window.scrollTo({ top: adminPanel.offsetTop - 100, behavior: 'smooth' });
         });
-
-        // Efecto de aparición para las tarjetas
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        
+        closeAdminBtn.addEventListener('click', () => {
+            adminPanel.style.display = 'none';
+            resetForm();
+        });
+        
+        // Cancelar edición
+        cancelEditBtn.addEventListener('click', resetForm);
+        
+        // Eliminar sección
+        deleteButton.addEventListener('click', () => {
+            if (editingSectionId && confirm('¿Estás seguro de eliminar esta sección?')) {
+                const sections = JSON.parse(localStorage.getItem('sections')) || {};
+                delete sections[editingSectionId];
+                localStorage.setItem('sections', JSON.stringify(sections));
+                loadSections();
+                resetForm();
+                alert('Sección eliminada correctamente');
+            }
+        });
+        
+        // Guardar sección
+        sectionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const sectionData = {
+                number: document.getElementById('section-number').value,
+                title: document.getElementById('section-title').value,
+                subtitle: document.getElementById('section-subtitle').value,
+                description: document.getElementById('section-description').value,
+                links: parseLinks(document.getElementById('section-links').value),
+                tags: document.getElementById('section-tags').value,
+                badge: document.getElementById('section-badge').value,
+                badgeClass: document.getElementById('section-badge-class').value
+            };
+            
+            // Guardar en localStorage
+            saveSection(sectionData);
+            
+            // Actualizar la vista
+            loadSections();
+            resetForm();
+            alert('Sección guardada correctamente!');
+        });
+        
+        // Parsear enlaces
+        function parseLinks(linksText) {
+            return linksText.split('\n')
+                .filter(line => line.trim() !== '')
+                .map(line => {
+                    const parts = line.split('|');
+                    return {
+                        texto: parts[0]?.trim() || 'Enlace',
+                        url: parts[1]?.trim() || '#',
+                        tipo: parts[2]?.trim() || 'default'
+                    };
+                });
+        }
+        
+        // Guardar sección en localStorage
+        function saveSection(sectionData) {
+            const sections = JSON.parse(localStorage.getItem('sections')) || {};
+            
+            if (editingSectionId) {
+                // Actualizar sección existente
+                sections[editingSectionId] = sectionData;
+            } else {
+                // Crear nueva sección
+                const newId = 'section-' + Date.now();
+                sections[newId] = sectionData;
+            }
+            
+            localStorage.setItem('sections', JSON.stringify(sections));
+        }
+        
+        // Cargar secciones desde localStorage
+        function loadSections() {
+            const sections = JSON.parse(localStorage.getItem('sections')) || {};
+            cardsContainer.innerHTML = '';
+            
+            // Convertir a array y ordenar por número de sección
+            const sortedSections = Object.entries(sections)
+                .sort((a, b) => a[1].number.localeCompare(b[1].number));
+            
+            sortedSections.forEach(([id, section]) => {
+                cardsContainer.innerHTML += createSectionHTML(id, section);
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.week-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
+            
+            // Actualizar lista de recursos en el footer
+            updateResourcesList(sections);
+            
+            // Agregar event listeners a los botones de edición
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const sectionId = button.getAttribute('data-id');
+                    loadSectionForEdit(sectionId);
+                });
+            });
+            
+            // Efecto de aparición para las tarjetas
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.week-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        }
+        
+        // Crear HTML para una sección
+        function createSectionHTML(id, section) {
+            // Construir botones de enlaces
+            let linksHTML = '';
+            if (section.links && section.links.length > 0) {
+                if (section.links.length === 1) {
+                    linksHTML = `
+                        <a href="${section.links[0].url}" class="material-button ${section.links[0].tipo || ''}" target="_blank">
+                            ${section.links[0].texto}
+                        </a>
+                    `;
+                } else {
+                    linksHTML = '<div class="buttons-group">';
+                    section.links.forEach(link => {
+                        linksHTML += `
+                            <a href="${link.url}" class="material-button ${link.tipo || ''}" target="_blank">
+                                ${link.texto}
+                            </a>
+                        `;
+                    });
+                    linksHTML += '</div>';
+                }
+            }
+            
+            return `
+                <section id="${id}" class="week-card">
+                    <button class="edit-button" data-id="${id}">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    
+                    <div class="week-header">
+                        <div class="week-number">${section.number}</div>
+                        <div class="week-titles">
+                            <h2>${section.title}</h2>
+                            <p class="week-subtitle">${section.subtitle || ''}</p>
+                        </div>
+                        ${section.badge ? `<span class="update-badge ${section.badgeClass || ''}">${section.badge}</span>` : ''}
+                    </div>
+                    <div class="week-body">
+                        <div class="week-description">
+                            <p>${section.description || ''}</p>
+                            ${section.tags ? `<div class="week-tags">${section.tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('')}</div>` : ''}
+                        </div>
+                        <div class="week-actions">
+                            ${linksHTML}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+        
+        // Actualizar lista de recursos en el footer
+        function updateResourcesList(sections) {
+            resourcesList.innerHTML = '';
+            
+            Object.values(sections).forEach(section => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="#${section.number}">${section.title}</a>`;
+                resourcesList.appendChild(listItem);
+            });
+        }
+        
+        // Cargar sección para editar
+        function loadSectionForEdit(sectionId) {
+            const sections = JSON.parse(localStorage.getItem('sections')) || {};
+            const section = sections[sectionId];
+            
+            if (!section) return;
+            
+            document.getElementById('section-id').value = sectionId;
+            document.getElementById('section-number').value = section.number;
+            document.getElementById('section-title').value = section.title;
+            document.getElementById('section-subtitle').value = section.subtitle || '';
+            document.getElementById('section-description').value = section.description || '';
+            document.getElementById('section-links').value = section.links ? 
+                section.links.map(link => `${link.texto}|${link.url}|${link.tipo}`).join('\n') : '';
+            document.getElementById('section-tags').value = section.tags || '';
+            document.getElementById('section-badge').value = section.badge || '';
+            document.getElementById('section-badge-class').value = section.badgeClass || '';
+            
+            editingSectionId = sectionId;
+            adminPanel.style.display = 'block';
+            deleteButton.style.display = 'block';
+            window.scrollTo({ top: adminPanel.offsetTop - 100, behavior: 'smooth' });
+        }
+        
+        // Resetear formulario
+        function resetForm() {
+            sectionForm.reset();
+            document.getElementById('section-id').value = '';
+            editingSectionId = null;
+            adminPanel.style.display = 'none';
+            deleteButton.style.display = 'none';
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar secciones iniciales si no hay datos
+            if (!localStorage.getItem('sections')) {
+                // Secciones iniciales (tus secciones actuales)
+                const initialSections = {
+                    "section-1": {
+                        number: "01",
+                        title: "Resumen - Sistemas de Gestión",
+                        subtitle: "Fundamentos teóricos",
+                        description: "Resumen breve del libro con los conceptos clave de SGBD",
+                        links: [
+                            { texto: "Ver en Canva", url: "https://www.canva.com/design/DAGjhW3b3Z4/1F8Msflp4mXHkiPCdT5GOg/edit", tipo: "canva" }
+                        ],
+                        tags: "Modelos de datos, Arquitectura",
+                        badge: "Actualizado",
+                        badgeClass: ""
+                    },
+                    "section-2": {
+                        number: "02",
+                        title: "Diagramas Entidad-Relación",
+                        subtitle: "Modelado conceptual",
+                        description: "Modelado de los enunciados con notación Chen y Crow's Foot",
+                        links: [
+                            { texto: "Enunciado 1", url: "https://miro.com/app/board/uXjVIKKtp7I=/?share_link_id=351356854071", tipo: "miro" },
+                            { texto: "Enunciado 2", url: "https://miro.com/app/board/uXjVIEViWTk=/?share_link_id=707711672275", tipo: "miro" }
+                        ],
+                        tags: "Miro, UML, Cardinalidades",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-3": {
+                        number: "03",
+                        title: "Tablas Relacionales",
+                        subtitle: "Implementación práctica",
+                        description: "Normalización de tablas y relaciones entre entidades",
+                        links: [
+                            { texto: "Ver Tablas", url: "https://docs.google.com/spreadsheets/d/1qCrRLu40WDrcBY35mrMY3RNO7dEVE-ErY9tIFCTk134/edit?usp=sharing", tipo: "sheets" }
+                        ],
+                        tags: "Normalización, Relaciones",
+                        badge: "En progreso",
+                        badgeClass: ""
+                    },
+                    "section-4": {
+                        number: "04",
+                        title: "Modelo Conceptual - Diagramas E/R",
+                        subtitle: "Desarrollo avanzado",
+                        description: "Diagramas detallados con notación Chen y Crow's Foot para casos complejos",
+                        links: [
+                            { texto: "Enunciado 1", url: "https://www.canva.com/design/DAGlGT8bDKY/X9zQTtO7hgex5OSJE5TPYQ/view", tipo: "canva" },
+                            { texto: "Enunciado 2", url: "https://www.canva.com/design/DAGlGubxnV4/svhKEBY3HG4keco_plw4eg/view", tipo: "canva" }
+                        ],
+                        tags: "Canva, Normalización, Relaciones",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-5": {
+                        number: "05",
+                        title: "Registro y Base de Datos",
+                        subtitle: "Guía práctica en Microsoft Access",
+                        description: "Implementación de sistema de registro y creación de base de datos con:\n- Registro\n- Inicio de Sesión\n- Generación de Base de Datos",
+                        links: [
+                            { texto: "Ver Manual Completo", url: "https://www.canva.com/design/DAGl3x54IsA/RaSMVcBqlbN9USvtAnZOSQ/view", tipo: "canva" }
+                        ],
+                        tags: "Guía Práctica, Microsoft Azure, Registro de Usuarios",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-6": {
+                        number: "06",
+                        title: "Página Web en Azure",
+                        subtitle: "Manual de como subir la página web de GITHUB hacia Azure",
+                        description: "Práctica y guía para la carga de mi página web a Microsoft Azure.",
+                        links: [
+                            { texto: "Ver Canva Semana 6", url: "https://www.canva.com/design/DAGmuobX94Q/d9MOApT45K-0FTPdQQCOyg/view", tipo: "canva" }
+                        ],
+                        tags: "Azure, GitHub, Canva",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    "section-ex": {
+                        number: "EX",
+                        title: "Primer Examen Parcial",
+                        subtitle: "Evaluación inicial",
+                        description: "Material de preparación y recursos para el primer examen parcial",
+                        links: [
+                            { texto: "Pruebas", url: "https://docs.google.com/document/d/1YJVrLAQ-lF3gZb0qFfaxu6MEreE69UDuEwX2qNW2JD0/edit?usp=sharing", tipo: "exam" },
+                            { texto: "Descargar PDF", url: "https://drive.google.com/uc?export=download&id=1SIvDIHCaEaUaPnMJlOy8UNgXGVyjPTl-", tipo: "pdf" }
+                        ],
+                        tags: "Examen, Parcial, Evaluación",
+                        badge: "Importante",
+                        badgeClass: "important"
+                    },
+                    "section-10": {
+                        number: "10",
+                        title: "Semana 10 - Actividades Combinadas",
+                        subtitle: "Trabajos de la semana 10",
+                        description: "En esta sección se encuentran agrupadas las actividades correspondientes a la semana 10.",
+                        links: [
+                            { texto: "Trabajo Semana 10 - 1", url: "https://docs.google.com/document/d/11F-vBC0ybYxilvI_ljJYjU-yKmHCNFCse-9xtzhUN8w/edit?usp=sharing", tipo: "docs" },
+                            { texto: "Trabajo Semana 10 - 2", url: "https://docs.google.com/document/d/1jmGm4t-UOf3j5QYhtW6GjJh7jJb9OVoLx3i2j3El2V8/edit?usp=sharing", tipo: "docs" }
+                        ],
+                        tags: "Consultas, Base de Datos",
+                        badge: "Nuevo",
+                        badgeClass: "new"
+                    },
+                    // ... (agrega más secciones según sea necesario) ...
+                };
+                
+                localStorage.setItem('sections', JSON.stringify(initialSections));
+            }
+            
+            // Cargar secciones
+            loadSections();
+            
+            // Desplazamiento suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
