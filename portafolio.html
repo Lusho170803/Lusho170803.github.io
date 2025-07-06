@@ -879,9 +879,16 @@
             const sections = JSON.parse(localStorage.getItem('sections')) || {};
             cardsContainer.innerHTML = '';
             
-            // Convertir a array y ordenar por número de sección
+            // Orden personalizado para las secciones
+            const customOrder = ['01', '02', '03', '04', '05', '06', 'EX', '10', '11', '12', '13', '14', '15', 'P13', 'P14'];
+            
+            // Convertir a array y ordenar según el orden personalizado
             const sortedSections = Object.entries(sections)
-                .sort((a, b) => a[1].number.localeCompare(b[1].number));
+                .sort((a, b) => {
+                    const indexA = customOrder.indexOf(a[1].number);
+                    const indexB = customOrder.indexOf(b[1].number);
+                    return (indexA === -1 ? customOrder.length : indexA) - (indexB === -1 ? customOrder.length : indexB);
+                });
             
             sortedSections.forEach(([id, section]) => {
                 cardsContainer.innerHTML += createSectionHTML(id, section);
